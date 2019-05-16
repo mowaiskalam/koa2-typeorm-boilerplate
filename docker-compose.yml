@@ -1,0 +1,48 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: koa2-typeorm-boilerplate
+    networks:
+      - nodejs101
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    env_file:
+      - './config/.env'
+    volumes:
+      - './config:/app/config'
+      - './src:/app/src'
+      - './doc:/app/doc'
+      - './database:/app/database'
+      - './dist:/app/dist'
+    ports:
+      - 4001:4001
+      - 9229:9229
+    command:
+      - npm
+      - run
+      - start:watch
+
+  postgres:
+    image: postgres:12.6
+    container_name: koa2-typeorm-db
+    networks:
+      - nodejs101
+    environment:
+      POSTGRES_DB: nodejs101
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres: ~
+
+networks:
+  nodejs101:
+    name: koa2-typeorm-boilerplate

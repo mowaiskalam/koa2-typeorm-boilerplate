@@ -1,0 +1,6 @@
+console.log('kicking off server');
+// register babel hook
+require('ts-node/register');
+
+// register application
+require('../src');
