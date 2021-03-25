@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import * as Boom from 'boom';
+import * as Boom from '@hapi/boom';
 import * as compose from 'koa-compose';
 import { Context } from 'koa';
 
@@ -36,7 +36,7 @@ const handler = async (ctx: Context, next: () => void) => {
   }
 };
 
-const handleBoomError = (err: Boom): IMetaData => {
+const handleBoomError = (err: Boom.Boom): IMetaData => {
   return {
     status: +err.output.statusCode,
     message: err.message,
