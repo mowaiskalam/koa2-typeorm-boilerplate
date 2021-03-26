@@ -27,7 +27,7 @@ services:
       - start:watch
 
   postgres:
-    image: mdillon/postgis:10-alpine
+    image: postgres:12.6
     container_name: koa2-typeorm-db
     networks:
       - nodejs101
