@@ -8,23 +8,23 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      - postgres
     env_file:
       - './config/.env'
     volumes:
       - './config:/app/config'
       - './src:/app/src'
       - './doc:/app/doc'
+      - './database:/app/database'
+      - './dist:/app/dist'
     ports:
       - 4001:4001
-      # - 9229:9229
-    depends_on:
-      - postgres
-    entrypoint:
-      - ./entrypoint.sh
-      - ./node_modules/.bin/nodemon
-      #- --inspect-brk=0.0.0.0 , break before code starts
-      #- --inspect=0.0.0.0
-      - ./bin/server
+      - 9229:9229
+    command:
+      - npm
+      - run
+      - start:watch
 
   postgres:
     image: mdillon/postgis:10-alpine

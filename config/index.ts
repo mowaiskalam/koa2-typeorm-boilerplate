@@ -20,6 +20,13 @@ export interface IConfig {
     maxQueryExecutionTime: number;
     readReplicationSlaves: string;
   };
+  aws: {
+    region: string;
+    cognitoPoolID: string;
+    clientId: string;
+    accessKeyId: string;
+    secretAccessKey: string;
+  };
 }
 
 const config = convict<IConfig>({
@@ -92,6 +99,33 @@ const config = convict<IConfig>({
     readReplicationSlaves: {
       format: String,
       env: 'TYPEORM_READ_REPLICATION_SLAVES', // comma separated hostnames of read relication slaves
+      default: '',
+    },
+  },
+  aws: {
+    region: {
+      format: String,
+      env: 'AWS_REGION',
+      default: '',
+    },
+    cognitoPoolID: {
+      format: String,
+      env: 'AWS_COGNITO_POOL_ID',
+      default: '',
+    },
+    clientId: {
+      format: String,
+      env: 'AWS_COGNITO_CLIENT_ID',
+      default: '',
+    },
+    accessKeyId: {
+      format: String,
+      env: 'AWS_ACCESS_KEY_ID',
+      default: '',
+    },
+    secretAccessKey: {
+      format: String,
+      env: 'AWS_SECRET_ACCESS_KEY',
       default: '',
     },
   },

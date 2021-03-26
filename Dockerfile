@@ -7,8 +7,11 @@ RUN npm install
 
 COPY . .
 
+RUN npm run build
+RUN npm run build:post
+
 EXPOSE 4001
 EXPOSE 5858
 
 ENTRYPOINT ["./entrypoint.sh"]
-CMD ["node", "./bin/server"]
+CMD ["npm", "run", "start"]

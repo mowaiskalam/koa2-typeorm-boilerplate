@@ -5,9 +5,17 @@
   "description": "A simple koa2 ts quickstarter",
   "main": "bin/server",
   "scripts": {
-    "start": "nodemon -r dotenv/config bin/server dotenv_config_path=./config/.env",
+    "compile": "tsc && npm run build:post && node ./dist/src/index.js",
+    "clean": "rm -rf dist",
+    "build": "tsc",
+    "build:post": "copyfiles ./database/**/*.{json,csv} ./dist/",
+    "build:start": "npm run build && npm run build:post && node ./dist/src/index.js",
+    "watch": "tsc -w -p .",
+    "debug": "nodemon --watch ./dist --inspect=0.0.0.0:9229 -r source-map-support/register ./dist/src/index.js",
+    "start": "node -r source-map-support/register ./dist/src/index.js",
+    "start:inspect": "node -r source-map-support/register --inspect=0.0.0.0 ./dist/src/index.js",
+    "start:watch": "./node_modules/.bin/tsc-watch --noClear --onSuccess \"npm run start:inspect\"",
     "start:docker": "docker-compose up -d",
-    "stop:docker": "docker-compose down",
     "build:docker": "docker-compose build",
     "exec:docker": "docker exec -it koa2-typeorm-boilerplate sh",
     "logs": "docker logs -f koa2-typeorm-boilerplate",
@@ -23,7 +31,9 @@
     "test:coverage": "jest --colors --coverage",
     "migrate:create": "./node_modules/.bin/typeorm migration:create -n",
     "migrate:revert": "ts-node ./node_modules/.bin/typeorm migration:revert",
-    "migrate:run": "ts-node ./node_modules/.bin/typeorm migration:run"
+    "migrate:run": "ts-node ./node_modules/.bin/typeorm migration:run",
+    "migrate:run:tsc": "node -r source-map-support/register ./node_modules/.bin/typeorm migration:run",
+    "migrate:revert:tsc": "node -r source-map-support/register ./node_modules/.bin/typeorm migration:revert"
   },
   "repository": {
     "type": "git",
@@ -36,11 +46,12 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/boom": "^9.1.0",
-    "joi": "^17.1.1",
+    "aws-sdk": "^2.873.0",
     "bunyan": "^1.8.12",
     "convict": "5.0.0",
-    "jsonwebtoken": "^8.5.1",
     "dotenv": "^6.2.0",
+    "joi": "^17.1.1",
+    "jsonwebtoken": "^8.5.1",
     "koa": "2.7.0",
     "koa-bodyparser": "4.2.1",
     "koa-bunyan-logger": "^2.1.0",
@@ -73,6 +84,7 @@
     "@types/node-cache": "4.1.3",
     "@types/request": "2.48.1",
     "@types/request-promise-native": "1.0.16",
+    "copyfiles": "2.2.0",
     "apidoc": "0.17.6",
     "jest": "^24.8.0",
     "nodemon": "1.19.0",
@@ -82,6 +94,7 @@
     "ts-jest": "^24.0.2",
     "ts-node": "9.1.1",
     "tslint": "^5.16.0",
+    "tsc-watch": "4.0.0",
     "typescript": "4.2.3"
   },
   "jest": {

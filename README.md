@@ -73,9 +73,9 @@ TYPEORM_USERNAME=postgres
 TYPEORM_PASSWORD=postgres
 TYPEORM_DATABASE=nodejs101
 TYPEORM_PORT=5432
-TYPEORM_ENTITIES=src/entities/**/*.ts
-TYPEORM_MIGRATIONS=database/migrations/**/*.ts
-TYPEORM_ENTITIES_DIR=src/entities
+TYPEORM_ENTITIES=dist/src/entities/**/*.js
+TYPEORM_MIGRATIONS=dist/database/migrations/**/*.js
+TYPEORM_ENTITIES_DIR=dist/src/entities
 TYPEORM_MIGRATIONS_DIR=database/migrations
 TYPEORM_DRIVER_EXTRA={"max":100}
 ```
